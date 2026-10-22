@@ -1,12 +1,239 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JUST PUSH — Brutalist Studio</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARTINC0000</title>
+    <style>
+        /* CSS Reset & Base Styles */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @font-face {
+            font-family: 'TS Block Bold';
+            src: url('font.woff2') format('woff2');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Section base */
+        .section {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Screen 1 - Hero */
+        .hero-section {
+            background-color: #ffffff;
+        }
+
+        /* Screen 2 - Services */
+        .services-section {
+            background-color: #000000;
+            padding: 4rem 1.5rem;
+        }
+
+        /* Button base */
+        .btn-brutalist {
+            font-family: 'TS Block Bold', Impact, sans-serif;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* Hero button */
+        .btn-push {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 1.25rem 3rem;
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            font-weight: bold;
+        }
+
+        .btn-push:hover {
+            background-color: #1a1a1a;
+            transform: scale(1.02);
+        }
+
+        .btn-push:active {
+            transform: scale(0.98);
+        }
+
+        /* Service buttons */
+        .btn-service {
+            display: block;
+            width: 100%;
+            max-width: 600px;
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            padding: 1.5rem 2rem;
+            font-size: clamp(0.875rem, 2vw, 1.25rem);
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .btn-service:hover {
+            background-color: #ffffff;
+            color: #000000;
+            transform: translateX(8px);
+        }
+
+        .btn-service:active {
+            transform: translateX(4px);
+        }
+
+        /* Headline */
+        .headline-services {
+            font-family: 'TS Block Bold', Impact, sans-serif;
+            color: #ffffff;
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            line-height: 1.2;
+            
+            /* Скрытие до появления анимации */
+            opacity: 0; 
+        }
+
+        /* Services stack */
+        .services-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.25rem;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        /* Анимация плавного появления */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        /* Поочередная задержка для элементов */
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+        .stagger-5 { animation-delay: 0.5s; }
+        .stagger-6 { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+
+    <main>
+        <!-- Screen 1 - Hero -->
+        <section class="section hero-section">
+            <button class="btn-brutalist btn-push" id="js-push-btn" aria-label="Scroll to services">
+                JUST PUSH
+            </button>
+        </section>
+
+        <!-- Screen 2 - Services -->
+        <section id="services-section" class="section services-section">
+            <h1 id="js-headline" class="headline-services">
+                No portfolios here.<br>Just contact.
+            </h1>
+
+            <div class="services-stack">
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="btn-brutalist btn-service js-service-btn stagger-2">
+                    Audio Mixing & Mastering
+                </a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="btn-brutalist btn-service js-service-btn stagger-3">
+                    Custom Typography & Fonts
+                </a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="btn-brutalist btn-service js-service-btn stagger-4">
+                    AI Project Coding-Architecture
+                </a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="btn-brutalist btn-service js-service-btn stagger-5">
+                    Poster & Visual Design
+                </a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="btn-brutalist btn-service js-service-btn stagger-6">
+                    Video editing
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const pushBtn = document.getElementById('js-push-btn');
+            const servicesSection = document.getElementById('services-section');
+            const headline = document.getElementById('js-headline');
+            const serviceButtons = document.querySelectorAll('.js-service-btn');
+
+            // Плавный скролл при клике
+            pushBtn.addEventListener('click', () => {
+                servicesSection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            // Intersection Observer для запуска анимаций при докрутке
+            const observerOptions = {
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver(([entry]) => {
+                if (entry.isIntersecting) {
+                    // Активируем заголовок
+                    headline.classList.add('animate-fade-in-up', 'stagger-1');
+                    
+                    // Активируем каждую кнопку с задержкой
+                    serviceButtons.forEach((btn) => {
+                        btn.classList.add('animate-fade-in-up');
+                    });
+                    
+                    // Отключаем слежку, чтобы анимация не перезапускалась
+                    observer.disconnect();
+                }
+            }, observerOptions);
+
+            observer.observe(servicesSection);
+        });
+    </script>
+</body>
 </html>
