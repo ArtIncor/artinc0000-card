@@ -6,14 +6,27 @@
     <title>ARTINC0000</title>
     <style>
         /* CSS Reset & Base Styles */
-        *,
-        *::before,
-        *::after {
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'TS Block Bold', Impact, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            /* Плавный динамический фон для всего сайта */
+            background-color: #ffffff;
+            transition: background-color 0.1s linear;
+        }
+
+        /* Custom Font Face */
         @font-face {
             font-family: 'TS Block Bold';
             src: url('font.woff2') format('woff2');
@@ -22,217 +35,237 @@
             font-display: swap;
         }
 
-        html {
-            scroll-behavior: smooth;
-            overflow-x: hidden;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            min-height: 100vh;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        /* Section base */
-        .section {
-            width: 100%;
-            min-height: 100vh;
+        /* Screen 1: Hero */
+        #hero {
+            height: 100vh;
+            width: 100vw;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             position: relative;
         }
 
-        /* Screen 1 - Hero */
-        .hero-section {
-            background-color: #ffffff;
-        }
-
-        /* Screen 2 - Services */
-        .services-section {
-            background-color: #000000;
-            padding: 4rem 1.5rem;
-        }
-
-        /* Button base */
-        .btn-brutalist {
-            font-family: 'TS Block Bold', Impact, sans-serif;
-            cursor: pointer;
-            border: none;
-            outline: none;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            text-decoration: none;
-            transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        /* Hero button */
-        .btn-push {
+        .push-btn {
+            display: inline-block;
             background-color: #000000;
             color: #ffffff;
-            padding: 1.25rem 3rem;
-            font-size: clamp(1rem, 2.5vw, 1.5rem);
-            font-weight: bold;
+            border: 3px solid #000000;
+            padding: 1.5rem 3.5rem;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-family: 'TS Block Bold', Impact, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.4s ease, color 0.4s ease, transform 0.4s ease;
+            will-change: opacity, transform;
         }
 
-        .btn-push:hover {
-            background-color: #1a1a1a;
-            transform: scale(1.02);
+        .push-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+            transform: scale(1.05);
         }
 
-        .btn-push:active {
+        .push-btn:active {
             transform: scale(0.98);
         }
 
-        /* Service buttons */
-        .btn-service {
-            display: block;
-            width: 100%;
-            max-width: 600px;
-            background-color: transparent;
+        /* Screen 2: Services */
+        #services {
+            min-height: 100vh;
+            width: 100vw;
+            /* Фон убираем, так как теперь за него отвечает body */
             color: #ffffff;
-            border: 2px solid #ffffff;
-            padding: 1.5rem 2rem;
-            font-size: clamp(0.875rem, 2vw, 1.25rem);
-            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+            opacity: 0;
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Проявляем контент второй секции, когда фон стал достаточно темным */
+        #services.active {
+            opacity: 1;
+        }
+
+        #services h1 {
+            font-size: clamp(2rem, 6vw, 4.5rem);
             text-align: center;
-        }
-
-        .btn-service:hover {
-            background-color: #ffffff;
-            color: #000000;
-            transform: translateX(8px);
-        }
-
-        .btn-service:active {
-            transform: translateX(4px);
-        }
-
-        /* Headline */
-        .headline-services {
-            font-family: 'TS Block Bold', Impact, sans-serif;
-            color: #ffffff;
-            font-size: clamp(1.5rem, 4vw, 3rem);
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
             text-transform: uppercase;
-            letter-spacing: 0.02em;
-            line-height: 1.2;
-            
-            /* Скрытие до появления анимации */
-            opacity: 0; 
+            letter-spacing: 0.05em;
+            line-height: 1.1;
+            max-width: 900px;
         }
 
-        /* Services stack */
         .services-stack {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 1.25rem;
+            gap: 1.5rem;
             width: 100%;
             max-width: 600px;
+            align-items: center;
         }
 
-        /* Анимация плавного появления */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
+        .service-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            padding: 1.5rem 1rem;
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            font-family: 'TS Block Bold', Impact, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            
+            /* Слегка увеличили смещение для более выразительного выплывания */
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .service-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .service-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Класс анимации, запускаемый скриптом */
+        .service-btn.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Задержки появления кнопок услуг */
+        .service-btn:nth-child(1) { transition-delay: 0.15s; }
+        .service-btn:nth-child(2) { transition-delay: 0.25s; }
+        .service-btn:nth-child(3) { transition-delay: 0.35s; }
+        .service-btn:nth-child(4) { transition-delay: 0.45s; }
+        .service-btn:nth-child(5) { transition-delay: 0.55s; }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            #services {
+                padding: 3rem 1.5rem;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            
+            .push-btn {
+                padding: 1.2rem 2.5rem;
+                width: 80%;
+                text-align: center;
+            }
+
+            .services-stack {
+                gap: 1rem;
             }
         }
-
-        .animate-fade-in-up {
-            animation: fadeInUp 0.6s ease-out forwards;
-        }
-
-        /* Поочередная задержка для элементов */
-        .stagger-1 { animation-delay: 0.1s; }
-        .stagger-2 { animation-delay: 0.2s; }
-        .stagger-3 { animation-delay: 0.3s; }
-        .stagger-4 { animation-delay: 0.4s; }
-        .stagger-5 { animation-delay: 0.5s; }
-        .stagger-6 { animation-delay: 0.6s; }
     </style>
 </head>
 <body>
 
-    <main>
-        <!-- Screen 1 - Hero -->
-        <section class="section hero-section">
-            <button class="btn-brutalist btn-push" id="js-push-btn" aria-label="Scroll to services">
-                JUST PUSH
-            </button>
-        </section>
+    <!-- Screen 1: Hero -->
+    <section id="hero">
+        <a href="#services" class="push-btn" aria-label="Scroll to services">JUST PUSH</a>
+    </section>
 
-        <!-- Screen 2 - Services -->
-        <section id="services-section" class="section services-section">
-            <h1 id="js-headline" class="headline-services">
-                No portfolios here.<br>Just contact.
-            </h1>
-
-            <div class="services-stack">
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="btn-brutalist btn-service js-service-btn stagger-2">
-                    Audio Mixing & Mastering
-                </a>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="btn-brutalist btn-service js-service-btn stagger-3">
-                    Custom Typography & Fonts
-                </a>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="btn-brutalist btn-service js-service-btn stagger-4">
-                    AI Project Coding-Architecture
-                </a>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="btn-brutalist btn-service js-service-btn stagger-5">
-                    Poster & Visual Design
-                </a>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="btn-brutalist btn-service js-service-btn stagger-6">
-                    Video editing
-                </a>
-            </div>
-        </section>
-    </main>
+    <!-- Screen 2: Services -->
+    <section id="services">
+        <h1>No portfolios here.<br>Just contact.</h1>
+        
+        <div class="services-stack">
+            <a href="https://www.instagram.com/artinc0000?psln=MWg3aWplNTBhMTg1Nw==" class="service-btn" target="_blank" rel="noopener noreferrer">
+                Audio Mixing & Mastering
+            </a>
+            <a href="https://www.instagram.com/artinc0000?psln=MWg3aWplNTBhMTg1Nw==" class="service-btn" target="_blank" rel="noopener noreferrer">
+                Custom Typography & Fonts
+            </a>
+            <a href="https://www.instagram.com/artinc0000?psln=MWg3aWplNTBhMTg1Nw==" class="service-btn" target="_blank" rel="noopener noreferrer">
+                AI Project Coding-Architecture
+            </a>
+            <a href="https://www.instagram.com/artinc0000?psln=MWg3aWplNTBhMTg1Nw==" class="service-btn" target="_blank" rel="noopener noreferrer">
+                Poster & Visual Design
+            </a>
+            <a href="https://www.instagram.com/artinc0000?psln=MWg3aWplNTBhMTg1Nw==" class="service-btn" target="_blank" rel="noopener noreferrer">
+                Video editing
+            </a>
+        </div>
+    </section>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const pushBtn = document.getElementById('js-push-btn');
-            const servicesSection = document.getElementById('services-section');
-            const headline = document.getElementById('js-headline');
-            const serviceButtons = document.querySelectorAll('.js-service-btn');
+            const body = document.body;
+            const pushBtn = document.querySelector('.push-btn');
+            const servicesSection = document.getElementById('services');
+            const serviceButtons = document.querySelectorAll('.service-btn');
 
-            // Плавный скролл при клике
-            pushBtn.addEventListener('click', () => {
-                servicesSection.scrollIntoView({ behavior: 'smooth' });
+            // Функция плавного интерактивного перехода градиента при скролле
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                const vh = window.innerHeight;
+                
+                // Рассчитываем прогресс скролла между первым и вторым экраном (от 0 до 1)
+                const progress = Math.min(scrollY / vh, 1);
+
+                // Плавно переводим цвет фона из #ffffff (255, 255, 255) в #000000 (0, 0, 0)
+                const colorValue = Math.floor(255 * (1 - progress));
+                body.style.backgroundColor = `rgb(${colorValue}, ${colorValue}, ${colorValue})`;
+
+                // Элегантное растворение кнопки "JUST PUSH" и её легкое смещение вверх
+                pushBtn.style.opacity = 1 - progress * 1.5;
+                pushBtn.style.transform = `translateY(-${progress * 50}px)`;
+
+                // Проявляем текст и структуру услуг, когда экран достаточно потемнел
+                if (progress > 0.4) {
+                    servicesSection.classList.add('active');
+                } else {
+                    servicesSection.classList.remove('active');
+                }
             });
 
-            // Intersection Observer для запуска анимаций при докрутке
+            // Наблюдатель за появлением кнопок услуг (эффект выплывания)
             const observerOptions = {
-                threshold: 0.15
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
             };
 
-            const observer = new IntersectionObserver(([entry]) => {
-                if (entry.isIntersecting) {
-                    // Активируем заголовок
-                    headline.classList.add('animate-fade-in-up', 'stagger-1');
-                    
-                    // Активируем каждую кнопку с задержкой
-                    serviceButtons.forEach((btn) => {
-                        btn.classList.add('animate-fade-in-up');
-                    });
-                    
-                    // Отключаем слежку, чтобы анимация не перезапускалась
-                    observer.disconnect();
-                }
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        // Позволяет кнопкам снова скрываться, если пользователь ушел наверх
+                        entry.target.classList.remove('visible');
+                    }
+                });
             }, observerOptions);
 
-            observer.observe(servicesSection);
+            serviceButtons.forEach(btn => {
+                observer.observe(btn);
+            });
+
+            // Плавный скролл по клику на кнопку
+            pushBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
         });
     </script>
 </body>
